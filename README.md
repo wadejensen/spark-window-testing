@@ -1,6 +1,7 @@
 # spark-window-testing
 Playing around with Spark Window Functions
 
+```
 // Create some data to test
 // Goal is to calculate GB-seconds and VCore-seconds from a polling data set which 
 // samples resource usage by user *roughly* every 30 seconds  
@@ -45,7 +46,8 @@ sampledUsage: org.apache.spark.sql.DataFrame = [name: string, cpus: int ... 2 mo
 |john|   7| 70|1.4969768588E9|
 |john|   8| 80|1.4969768883E9|
 +----+----+---+--------------+
-
+```
+```
 // Import the window functions.
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions._
@@ -79,8 +81,8 @@ interpolatedUsage: org.apache.spark.sql.DataFrame = [name: string, cpus: int ...
 |wade|  10|  4|1.4969768585E9|1.4969768288E9|118.80000019073486|297.00000047683716|
 |wade|  10|  4|1.4969768888E9|1.4969768585E9|121.19999980926514|302.99999952316284|
 +----+----+---+--------------+--------------+------------------+------------------+
-
-
+```
+```
 val aggregateUsage = interpolatedUsage.groupBy("name")
                                       .agg( sum($"GBsecs").as("TotalGBsecs"),
                                             sum($"Vcoresecs").as("TotalVcoresecs")
@@ -93,4 +95,5 @@ aggregateUsage: org.apache.spark.sql.DataFrame = [name: string, TotalGBsecs: dou
 +----+-----------------+-----------------+
 |john|          10810.0|           1081.0|
 |wade|842.8000001907349|2107.000000476837|
-+----+-----------------+-----------------+                                    
++----+-----------------+-----------------+
+```                                    
